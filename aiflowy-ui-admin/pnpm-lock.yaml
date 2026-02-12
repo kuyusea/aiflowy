@@ -638,8 +638,8 @@ importers:
         specifier: ^2.3.2
         version: 2.3.2(vue@3.5.24(typescript@5.9.3))
       '@tinyflow-ai/vue':
-        specifier: ^1.1.10
-        version: 1.1.10(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))
+        specifier: ^1.2.2
+        version: 1.2.2(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))
       '@vueuse/core':
         specifier: 'catalog:'
         version: 13.9.0(vue@3.5.24(typescript@5.9.3))
@@ -3878,11 +3878,11 @@ packages:
     peerDependencies:
       vue: ^3.5.17
 
-  '@tinyflow-ai/ui@1.1.10':
-    resolution: {integrity: sha512-l3kIYNq3K7LPKdcR6Dl60qwE039O4bdl7vRNnc1gqL0Rnzh6KTwYiwGvnwU8v96aoqCbRdPfvuvaaSrJomGf3Q==}
+  '@tinyflow-ai/ui@1.2.2':
+    resolution: {integrity: sha512-SwKucKqoR5A3CMyTk/KWK+c33d2D8uhyDtKhl61Wj/LAWuJdaxtZiUqQN+tjGGH0QqwgtgpuYK7h4UYWlUhqoQ==}
 
-  '@tinyflow-ai/vue@1.1.10':
-    resolution: {integrity: sha512-wK27NL3V00eFYDPRSioYCrmEsk5mvRFNooJR2bEgdYGmYWXSRkwYzPQy4dn1MrmGDMsqNYK3XjKRRvN7g+lofg==}
+  '@tinyflow-ai/vue@1.2.2':
+    resolution: {integrity: sha512-e+zkeyOrSu/sO2s0kBkQI46jMJjP0D1USswMJrlaOX6+uBujQhaZt5wLkKO8VKGiTsRaPY9PF79ecLUmiP+IRQ==}
     peerDependencies:
       vue: ^3.5.17
 
@@ -12825,16 +12825,16 @@ snapshots:
       '@tanstack/virtual-core': 3.13.12
       vue: 3.5.24(typescript@5.9.3)
 
-  '@tinyflow-ai/ui@1.1.10(svelte@5.44.0)':
+  '@tinyflow-ai/ui@1.2.2(svelte@5.44.0)':
     dependencies:
       '@floating-ui/dom': 1.7.4
       '@xyflow/svelte': 1.4.2(svelte@5.44.0)
     transitivePeerDependencies:
       - svelte
 
-  '@tinyflow-ai/vue@1.1.10(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))':
+  '@tinyflow-ai/vue@1.2.2(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))':
     dependencies:
-      '@tinyflow-ai/ui': 1.1.10(svelte@5.44.0)
+      '@tinyflow-ai/ui': 1.2.2(svelte@5.44.0)
       vue: 3.5.24(typescript@5.9.3)
     transitivePeerDependencies:
       - svelte
