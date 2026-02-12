@@ -207,7 +207,7 @@ function handleConfirm(node: any) {
                 />
               </ElFormItem>
             </template>
-            <ElFormItem>
+            <ElFormItem v-if="node.suspendForParameters?.length > 0">
               <div class="flex justify-end">
                 <ElButton
                   :disabled="confirmBtnLoading"
