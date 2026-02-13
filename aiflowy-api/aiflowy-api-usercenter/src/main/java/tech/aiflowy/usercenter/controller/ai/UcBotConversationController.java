@@ -108,7 +108,7 @@ public class UcBotConversationController extends BaseCurdController<BotConversat
             if (tech.aiflowy.common.util.StringUtil.noText(id)) {
                 throw new BusinessException("id must not be null");
             }
-            return Result.ok(service.getById(id));
+            return Result.ok(service.getMapper().selectOneWithRelationsById(id));
         } finally {
             TenantManager.restoreTenantCondition();
         }

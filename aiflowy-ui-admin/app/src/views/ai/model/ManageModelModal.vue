@@ -106,7 +106,7 @@ defineExpose({
     selectedProviderId.value = providerId;
     formDataRef.value?.resetFields();
     modelList.value = [];
-    activeName.value = tabList.value[0].name;
+    activeName.value = tabList.value[0]?.name;
     getProviderInfo(providerId);
     getLlmList(providerId, clickModelType);
     dialogVisible.value = true;
