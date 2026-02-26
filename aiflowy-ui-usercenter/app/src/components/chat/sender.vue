@@ -47,8 +47,8 @@ const btnLoading = ref(false);
 const getSessionList = inject<any>('getSessionList');
 const clearSenderFiles = () => {
   files.value = [];
+  senderRef.value?.closeHeader();
   attachmentsRef.value?.clearFiles();
-  openCloseHeader();
 };
 function sendMessage() {
   if (getDisabled()) {

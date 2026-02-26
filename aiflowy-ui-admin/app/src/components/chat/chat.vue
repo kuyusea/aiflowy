@@ -162,7 +162,7 @@ const stopSse = () => {
 const clearSenderFiles = () => {
   files.value = [];
   attachmentsRef.value?.clearFiles();
-  openCloseHeader();
+  senderRef.value?.closeHeader();
 };
 const handleSubmit = async (refreshContent: string) => {
   const attachments = attachmentsRef.value?.getFileList();
