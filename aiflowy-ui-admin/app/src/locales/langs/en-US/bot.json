@@ -23,5 +23,9 @@
   "aiOptimization": "AI Optimization",
   "weChatOfficialAccountConfiguration": "WeChat Official Account configuration",
   "aiOptimizedPrompts": "AI Optimized Prompts",
-  "chatAssistant": "Chat Assistant"
+  "Running": "Running",
+  "Completed": "Completed",
+  "chatAssistant": "Chat Assistant",
+  "Parameters": "Parameters",
+  "Result": "Result"
 }

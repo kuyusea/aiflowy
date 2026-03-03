@@ -84,7 +84,14 @@ function getUserAvatar() {
                     </template>
                   </div>
                 </template>
-                <ShowJson :value="chain.result" />
+                <div class="border-border flex flex-col gap-1 border-t pt-2">
+                  <span class="ml-2">参数：</span>
+                  <ShowJson :value="chain.arguments" />
+                </div>
+                <div class="mt-2 flex flex-col gap-1">
+                  <span class="ml-2">结果：</span>
+                  <ShowJson :value="chain.result" />
+                </div>
               </ElCollapseItem>
             </ElCollapse>
           </template>

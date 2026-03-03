@@ -16,14 +16,15 @@ import ChatFileUploader from '#/components/upload/ChatFileUploader.vue';
 
 type Think = {
   reasoning_content?: string;
+  thinkCollapse?: boolean;
   thinkingStatus?: ThinkingStatus;
-  thinlCollapse?: boolean;
 };
 
 type Tool = {
+  arguments: string;
   id: string;
   name: string;
-  result: string;
+  result?: string;
   status: 'TOOL_CALL' | 'TOOL_RESULT';
 };
 
@@ -91,6 +92,8 @@ function sendMessage() {
 
       if (res.event === 'done') {
         btnLoading.value = false;
+        props.updateLastMessage({ loading: false });
+        props.stopThinking();
         getSessionList();
       }
 
@@ -121,19 +124,13 @@ function sendMessage() {
               id: sseData?.payload?.tool_call_id,
               name: sseData?.payload?.name,
               status: sseData?.type,
-              result:
-                sseData?.type === 'TOOL_CALL'
-                  ? sseData?.payload?.arguments
-                  : sseData?.payload?.result,
+              arguments: sseData?.payload?.arguments,
             });
           } else {
             chains[index] = {
               ...chains[index]!,
               status: sseData?.type,
-              result:
-                sseData?.type === 'TOOL_CALL'
-                  ? sseData?.payload?.arguments
-                  : sseData?.payload?.result,
+              result: sseData?.payload?.result,
             };
           }
           return { chains };
@@ -152,7 +149,7 @@ function sendMessage() {
           if (index === -1) {
             chains.push({
               thinkingStatus: 'thinking',
-              thinlCollapse: true,
+              thinkCollapse: true,
               reasoning_content: delta,
             });
           } else {
@@ -167,7 +164,6 @@ function sendMessage() {
       } else if (sseData.type === 'MESSAGE') {
         props.updateLastMessage({
           thinkingStatus: 'end',
-          loading: false,
           content: (content += delta),
         });
         props.stopThinking();

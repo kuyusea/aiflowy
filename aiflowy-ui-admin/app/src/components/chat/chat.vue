@@ -42,14 +42,15 @@ import SendingIcon from '../icons/SendingIcon.vue';
 
 type Think = {
   reasoning_content?: string;
+  thinkCollapse?: boolean;
   thinkingStatus?: ThinkingStatus;
-  thinlCollapse?: boolean;
 };
 
 type Tool = {
+  arguments: string;
   id: string;
   name: string;
-  result: string;
+  result?: string;
   status: 'TOOL_CALL' | 'TOOL_RESULT';
 };
 
@@ -198,6 +199,13 @@ const handleSubmit = async (refreshContent: string) => {
       //  finish
       if (event === 'done') {
         sending.value = false;
+        if (lastIndex) {
+          bubbleItems.value[lastIndex] = {
+            ...lastBubbleItem!,
+            loading: false,
+          };
+        }
+        stopThinking();
         return;
       }
       if (!message.data) {
@@ -232,19 +240,13 @@ const handleSubmit = async (refreshContent: string) => {
             id: sseData?.payload?.tool_call_id,
             name: sseData?.payload?.name,
             status: sseData?.type,
-            result:
-              sseData?.type === 'TOOL_CALL'
-                ? sseData?.payload?.arguments
-                : sseData?.payload?.result,
+            arguments: sseData?.payload?.arguments,
           });
         } else {
           chains[index] = {
             ...chains[index]!,
             status: sseData?.type,
-            result:
-              sseData?.type === 'TOOL_CALL'
-                ? sseData?.payload?.arguments
-                : sseData?.payload?.result,
+            result: sseData?.payload?.result,
           };
         }
         bubbleItems.value[lastIndex]!.chains = chains;
@@ -266,7 +268,7 @@ const handleSubmit = async (refreshContent: string) => {
           if (index === -1) {
             chains.push({
               thinkingStatus: 'thinking',
-              thinlCollapse: true,
+              thinkCollapse: true,
               reasoning_content: delta,
             });
           } else {
@@ -284,7 +286,6 @@ const handleSubmit = async (refreshContent: string) => {
               '```echartsoption',
               '```echarts\noption',
             ),
-            loading: false,
             typing: true,
           };
           stopThinking();
@@ -442,7 +443,7 @@ function handlePasteFile(_: any, fileList: FileList) {
                 >
                   <ElThinking
                     v-if="isThink(chain)"
-                    v-model="chain.thinlCollapse"
+                    v-model="chain.thinkCollapse"
                     :content="chain.reasoning_content"
                     :status="chain.thinkingStatus"
                   />
@@ -478,7 +479,16 @@ function handlePasteFile(_: any, fileList: FileList) {
                           </template>
                         </div>
                       </template>
-                      <ShowJson :value="chain.result" />
+                      <div
+                        class="border-border flex flex-col gap-1 border-t pt-2"
+                      >
+                        <span class="ml-2">{{ $t('bot.Parameters') }}：</span>
+                        <ShowJson :value="chain.arguments" />
+                      </div>
+                      <div class="mt-2 flex flex-col gap-1">
+                        <span class="ml-2">{{ $t('bot.Result') }}：</span>
+                        <ShowJson :value="chain.result" />
+                      </div>
                     </ElCollapseItem>
                   </ElCollapse>
                 </template>
@@ -486,7 +496,7 @@ function handlePasteFile(_: any, fileList: FileList) {
 
               <!-- <ElThinking
                 v-if="item.reasoning_content"
-                v-model="item.thinlCollapse"
+                v-model="item.thinkCollapse"
                 :content="item.reasoning_content"
                 :status="item.thinkingStatus"
                 class="mb-3"
