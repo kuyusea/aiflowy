@@ -186,7 +186,7 @@ public class BotServiceImpl extends ServiceImpl<BotMapper, Bot> implements BotSe
             prompt = "【用户问题】：\n" + prompt + "\n\n请基于用户上传的附件内容回答用户问题： \n" +  "【用户上传的附件内容】：\n" + attachmentsToString ;
         }
         UserMessage userMessage = new UserMessage(prompt);
-        userMessage.addTools(buildFunctionList(Maps.of("botId", botId).set("needEnglishName", false)));
+        memoryPrompt.addTools(buildFunctionList(Maps.of("botId", botId).set("needEnglishName", false)));
         ChatOptions chatOptions = getChatOptions(modelOptions);
         Boolean enableDeepThinking = MapUtil.getBoolean(modelOptions, Bot.KEY_ENABLE_DEEP_THINKING, false);
         chatOptions.setThinkingEnabled(enableDeepThinking);
@@ -222,16 +222,16 @@ public class BotServiceImpl extends ServiceImpl<BotMapper, Bot> implements BotSe
         ChatOptions chatOptions = getChatOptions(modelOptions);
         ChatModel chatModel = chatCheckResult.getChatModel();
         UserMessage userMessage = new UserMessage(prompt);
-        userMessage.addTools(buildFunctionList(Maps.of("botId", botId)
-                .set("needEnglishName", false)
-                .set("needAccountId", false)
-        ));
         ChatSseEmitter chatSseEmitter = new ChatSseEmitter();
         SseEmitter emitter = chatSseEmitter.getEmitter();
         ChatMemory defaultChatMemory = new PublicBotMessageMemory(chatSseEmitter, messages);
         final MemoryPrompt memoryPrompt = new MemoryPrompt();
         memoryPrompt.setMemory(defaultChatMemory);
         memoryPrompt.addMessage(userMessage);
+        memoryPrompt.addTools(buildFunctionList(Maps.of("botId", botId)
+                .set("needEnglishName", false)
+                .set("needAccountId", false)
+        ));
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) requestAttributes;
         threadPoolTaskExecutor.execute(() -> {
