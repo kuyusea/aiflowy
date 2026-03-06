@@ -833,6 +833,7 @@ const formatSelectedMcpData = () => {
       ref="pluginToolDataRef"
       page-url="/api/v1/plugin/pageByCategory"
       :has-parent="true"
+      :search-params="['name']"
       @get-data="confirmUpdateAiBotPlugin"
       :extra-query-params="{
         category: 0,

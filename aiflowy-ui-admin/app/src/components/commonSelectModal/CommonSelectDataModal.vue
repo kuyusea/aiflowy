@@ -40,7 +40,7 @@ const props = defineProps({
   extraQueryParams: { type: Object, default: () => ({}) },
   searchParams: {
     type: Array as PropType<string[]>,
-    default: () => [],
+    default: () => ['title'],
   },
   titleKey: { type: String, default: 'name' },
   pageUrl: { type: String, default: '' },
