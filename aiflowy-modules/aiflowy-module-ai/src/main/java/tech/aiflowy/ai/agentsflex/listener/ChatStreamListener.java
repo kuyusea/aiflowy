@@ -54,6 +54,7 @@ public class ChatStreamListener implements StreamResponseListener {
         try {
             if (maxToolCallCount >= 20 ) {
                 sendSystemError(sseEmitter, "工具调用次数超出限制，请重新开始会话。");
+                return;
             }
             AiMessage aiMessage = aiMessageResponse.getMessage();
             if (aiMessage == null) {
